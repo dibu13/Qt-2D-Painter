@@ -26,8 +26,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->inspectorDock->setWidget(inspector);
 
     //Menu Bar Connexions
-    connect(ui->actionOpenProject, SIGNAL(triggered()), this, SLOT(openProject()));
-    connect(ui->actionSaveProject, SIGNAL(triggered()), this, SLOT(saveProject()));
+    connect(ui->actionNewScene, SIGNAL(triggered()), this, SLOT(newScene()));
+    connect(ui->actionOpenScene, SIGNAL(triggered()), this, SLOT(openScene()));
+    connect(ui->actionSaveScene, SIGNAL(triggered()), this, SLOT(saveScene()));
+    connect(ui->actionReadme, SIGNAL(triggered()), this, SLOT(openReadme()));
     connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
@@ -37,12 +39,22 @@ MainWindow::~MainWindow()
     delete uiRendering;
 }
 
-void MainWindow::openProject()
+void MainWindow::openScene()
 {
-    std::cout << "Open project" << std::endl;
+    std::cout << "Open scene" << std::endl;
 }
 
-void MainWindow::saveProject()
+void MainWindow::saveScene()
 {
-    std::cout << "Save project" << std::endl;
+    std::cout << "Save scene" << std::endl;
+}
+
+void MainWindow::newScene()
+{
+    std::cout << "New scene" << std::endl;
+}
+
+void MainWindow::openReadme()
+{
+    std::cout << "Open readme" << std::endl;
 }
