@@ -27,17 +27,22 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     inspector.cpp \
-    myopenglwidget.cpp
+    myopenglwidget.cpp \
+    scene.cpp \
+    hierarchy.cpp
 
 HEADERS += \
         mainwindow.h \
     inspector.h \
-    myopenglwidget.h
+    myopenglwidget.h \
+    scene.h \
+    hierarchy.h
 
 FORMS += \
         mainwindow.ui \
     rendering.ui \
-    inspector.ui
+    inspector.ui \
+    hierarchy.ui
 
 LIBS += -lopengl32
 

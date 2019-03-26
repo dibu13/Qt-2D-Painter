@@ -12,11 +12,11 @@ class MyOpenGLWidget : public QOpenGLWidget
     Q_OBJECT
 
 public:
-    explicit MyOpenGLWidget(QWidget *parent = 0);
+    explicit MyOpenGLWidget(QWidget *parent = nullptr);
 
     // OpenGL functions
     void initializeGL() override;
-    void resizeGL(int width, int height) override;
+    //void resizeGL(int width, int height) override;
     void paintGL() override;
 
 signals:
