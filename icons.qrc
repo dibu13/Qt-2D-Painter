@@ -4,5 +4,7 @@
         <file>Resources/icons/Folder.png</file>
         <file>Resources/icons/Badge-multiply.png</file>
         <file>Resources/icons/Disquette.png</file>
+        <file>Resources/icons/Document-new.png</file>
+        <file>Resources/icons/Info.png</file>
     </qresource>
 </RCC>

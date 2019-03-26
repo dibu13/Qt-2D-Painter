@@ -24,8 +24,10 @@ private:
     Inspector *inspector;
 
 public slots:
-    void openProject();
-    void saveProject();
+    void openScene();
+    void saveScene();
+    void newScene();
+    void openReadme();
 };
 
 #endif // MAINWINDOW_H
