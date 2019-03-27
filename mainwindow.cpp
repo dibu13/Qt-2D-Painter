@@ -25,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     uiInspector->setupUi(inspectorWidget);
     inspectorWidget->show();*/
 
-    Inspector* inspector = new Inspector(this);
+    Inspector* inspector = new Inspector();
+    inspector->show();
     ui->inspectorDock->setWidget(inspector);
 
     /*/ Render Settings

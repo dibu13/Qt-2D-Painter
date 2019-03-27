@@ -2,39 +2,34 @@
 #include "ui_gameobjectview.h"
 #include "ui_comprecttransformview.h"
 #include "ui_compshaperendererview.h"
+#include <QSpacerItem>
 
 Inspector::Inspector(QWidget *parent) :
     QWidget(parent),
-    uiGameobject(new Ui::Form),
-    uiRectTransform(new Ui::CompRectTransformView),
-    uiShapeRenderer(new Ui::CompShapeRendererView)
+    uiGameObjectView(new Ui::gameObjectView),
+    uiComponentTransformView(new Ui::compRectTransformView),
+    uiCompShapeRendererView(new Ui::compShapeRendererView)
 {
+    QWidget* gameObjectView = new QWidget();
+    QWidget* compRectTransformView = new QWidget();
+    QWidget* compShapeRendererView = new QWidget();
 
-    gameobjectWidget = new QWidget();
-    uiGameobject->setupUi(gameobjectWidget);
-    //gameobjectWidget->show();
+    uiGameObjectView->setupUi(gameObjectView);
+    uiComponentTransformView->setupUi(compRectTransformView);
+    uiCompShapeRendererView->setupUi(compShapeRendererView);
 
-    rectTransformWidget = new QWidget();
-    uiRectTransform->setupUi(rectTransformWidget);
-    //rectTransformWidget->show();
+    //Widget Layout
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(gameObjectView);
+    layout->addWidget(compRectTransformView);
+    layout->addWidget(compShapeRendererView);
 
-    shapeRendererWidget = new QWidget();
-    uiShapeRenderer->setupUi(shapeRendererWidget);
-    //shapeRendererWidget->show();
-
-    QLayout* layout = new QVBoxLayout();
-    layout->addWidget(gameobjectWidget);
-    layout->addWidget(rectTransformWidget);
-    layout->addWidget(shapeRendererWidget);
-
-    QWidget* inspectorWindow = new QWidget();
-    inspectorWindow->setLayout(layout);
-    inspectorWindow->show();
+    setLayout(layout);
 }
 
 Inspector::~Inspector()
 {
-    delete uiGameobject;
-    delete uiRectTransform;
-    delete uiShapeRenderer;
+    delete uiGameObjectView;
+    delete uiComponentTransformView;
+    delete uiCompShapeRendererView;
 }
