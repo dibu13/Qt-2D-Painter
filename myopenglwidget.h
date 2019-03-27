@@ -2,10 +2,13 @@
 #define MYOPENGLWIDGET_H
 
 #include <QOpenGLWidget>
+#include <iostream>
 
 namespace Ui {
 class MyOpenGLWidget;
 }
+
+class Scene;
 
 class MyOpenGLWidget : public QOpenGLWidget
 {
@@ -16,8 +19,15 @@ public:
 
     // OpenGL functions
     void initializeGL() override;
-    //void resizeGL(int width, int height) override;
     void paintGL() override;
+    //void resizeGL(int width, int height) override;
+
+    void paintEvent(QPaintEvent* event) override;
+
+
+public:
+
+    Scene* scene = nullptr;
 
 signals:
 

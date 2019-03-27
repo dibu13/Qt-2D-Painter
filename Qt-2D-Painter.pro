@@ -26,23 +26,31 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    inspector.cpp \
     myopenglwidget.cpp \
     scene.cpp \
-    hierarchy.cpp
+    gameobject.cpp \
+    component.cpp \
+    comprecttransform.cpp \
+    compshaperenderer.cpp \
+    inspector.cpp
 
 HEADERS += \
         mainwindow.h \
-    inspector.h \
     myopenglwidget.h \
     scene.h \
-    hierarchy.h
+    gameobject.h \
+    component.h \
+    comprecttransform.h \
+    compshaperenderer.h \
+    inspector.h
 
 FORMS += \
         mainwindow.ui \
     rendering.ui \
     inspector.ui \
-    hierarchy.ui
+    hierarchy.ui \
+    comprecttransformview.ui \
+    compshaperendererview.ui
 
 LIBS += -lopengl32
 

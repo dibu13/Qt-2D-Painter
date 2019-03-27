@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
-    <height>370</height>
+    <width>982</width>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,16 +23,16 @@
    <widget class="MyOpenGLWidget" name="openGLWidget">
     <property name="geometry">
      <rect>
-      <x>-1</x>
-      <y>-1</y>
-      <width>361</width>
-      <height>211</height>
+      <x>0</x>
+      <y>0</y>
+      <width>551</width>
+      <height>451</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>361</width>
-      <height>0</height>
+      <width>200</width>
+      <height>200</height>
      </size>
     </property>
    </widget>
@@ -51,10 +51,10 @@
    <addaction name="actionReadme"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QDockWidget" name="hierarchy">
+  <widget class="QDockWidget" name="hierarchyDock">
    <property name="minimumSize">
     <size>
-     <width>94</width>
+     <width>169</width>
      <height>38</height>
     </size>
    </property>
@@ -67,6 +67,12 @@
    <widget class="QWidget" name="dockWidgetContents"/>
   </widget>
   <widget class="QDockWidget" name="inspectorDock">
+   <property name="minimumSize">
+    <size>
+     <width>251</width>
+     <height>38</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Inspector</string>
    </property>
@@ -75,30 +81,12 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2"/>
   </widget>
-  <widget class="QDockWidget" name="renderingDock">
-   <property name="windowTitle">
-    <string>Rendering</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_3"/>
-  </widget>
-  <widget class="QDockWidget" name="project">
-   <property name="windowTitle">
-    <string>Project</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>8</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_4"/>
-  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>528</width>
+     <width>982</width>
      <height>21</height>
     </rect>
    </property>
@@ -123,7 +111,7 @@
   </widget>
   <action name="actionOpenScene">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/icons/Resources/icons/Folder.png</normaloff>:/icons/Resources/icons/Folder.png</iconset>
    </property>
    <property name="text">
@@ -132,7 +120,7 @@
   </action>
   <action name="actionSaveScene">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/icons/Resources/icons/Disquette.png</normaloff>:/icons/Resources/icons/Disquette.png</iconset>
    </property>
    <property name="text">
@@ -146,7 +134,7 @@
   </action>
   <action name="actionNewScene">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/icons/Resources/icons/Document-new.png</normaloff>:/icons/Resources/icons/Document-new.png</iconset>
    </property>
    <property name="text">
@@ -155,7 +143,7 @@
   </action>
   <action name="actionReadme">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/icons/Resources/icons/Info.png</normaloff>:/icons/Resources/icons/Info.png</iconset>
    </property>
    <property name="text">
@@ -171,8 +159,6 @@
    <header>myopenglwidget.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

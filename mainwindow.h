@@ -5,23 +5,24 @@
 
 namespace Ui {
 class MainWindow;
-class Rendering;
+class Hierarchy;
 }
 
-class Inspector;
+class Scene;
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    Ui::Rendering *uiRendering;
-    Inspector *inspector;
+    Ui::Hierarchy *uiHierarchy;
+
+    Scene* scene = nullptr;
 
 public slots:
     void openScene();

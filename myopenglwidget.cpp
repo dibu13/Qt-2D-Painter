@@ -1,6 +1,9 @@
 #include "myopenglwidget.h"
 
 #include <QPainter>
+#include <QPaintEvent>
+#include "scene.h"
+#include "gameobject.h"
 
 #pragma comment(lib, "OpenGL32.lib")
 
@@ -23,4 +26,21 @@ void MyOpenGLWidget::paintGL()
 {
     glClearColor(0.0f, 0.7f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void MyOpenGLWidget::paintEvent(QPaintEvent* event)
+{
+    if (scene != nullptr)
+    {
+        std::cout << "Scene referenced" << std::endl;
+
+        for (GameObject* go : scene->gameobjects)
+        {
+
+        }
+    }
+    else
+    {
+        std::cout << "No scene defined" << std::endl;
+    }
 }

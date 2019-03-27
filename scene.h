@@ -13,13 +13,14 @@ class Scene : public QWidget
 public:
     explicit Scene(QWidget *parent = nullptr);
 
-/*public slots:
+public slots:
     void AddEntity();
     void RemoveEntity();
     void SelectEntity(QListWidgetItem* item = nullptr);
 
 public:
-    QVector<GameObject*> scenegObjectVector;*/
+    QVector<GameObject*> gameobjects;
+    int selected = -1;
 };
 
 #endif // SCENE_H
