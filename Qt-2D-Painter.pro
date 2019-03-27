@@ -47,10 +47,10 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     rendering.ui \
-    inspector.ui \
     hierarchy.ui \
     comprecttransformview.ui \
-    compshaperendererview.ui
+    compshaperendererview.ui \
+    gameobjectview.ui
 
 LIBS += -lopengl32
 

@@ -4,7 +4,7 @@
 #include <QWidget>
 
 namespace Ui {
-class Inspector;
+class Form;
 class CompRectTransformView;
 class CompShapeRendererView;
 }
@@ -23,11 +23,11 @@ public:
     GameObject* reference = nullptr;
 
 private:
-    Ui::Inspector *uiInspector;
+    Ui::Form *uiGameobject;
     Ui::CompRectTransformView *uiRectTransform;
     Ui::CompShapeRendererView *uiShapeRenderer;
 
-    QWidget *inspectorWidget = nullptr;
+    QWidget *gameobjectWidget = nullptr;
     QWidget *rectTransformWidget = nullptr;
     QWidget *shapeRendererWidget = nullptr;
 };
