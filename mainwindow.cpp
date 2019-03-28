@@ -90,8 +90,11 @@ void MainWindow::addEntityButtonClicked()
 
 void MainWindow::removeEntityButtonClicked()
 {
-    scene->RemoveEntity(uiHierarchy->listWidget->currentItem()->text());
-    updateHierarchy();
+    if(uiHierarchy->listWidget->currentItem())
+    {
+        scene->RemoveEntity(uiHierarchy->listWidget->currentItem()->text());
+        updateHierarchy();
+    }
 }
 
 void MainWindow::updateHierarchy()
