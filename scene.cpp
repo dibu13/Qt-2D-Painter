@@ -17,9 +17,15 @@ void Scene::AddEntity(QString name)
     gameobjects.push_back(go);
 }
 
-void Scene::RemoveEntity()
+void Scene::RemoveEntity(QString name)
 {
-
+    foreach (GameObject* go, gameobjects) {
+        if(name == go->name)
+        {
+            delete go;
+            gameobjects.removeOne(go);
+        }
+    }
 }
 
 void Scene::SelectEntity(QListWidgetItem* item)

@@ -90,12 +90,7 @@ void MainWindow::addEntityButtonClicked()
 
 void MainWindow::removeEntityButtonClicked()
 {
-    foreach (GameObject* go, scene->gameobjects) {
-        if(uiHierarchy->listWidget->currentItem()->text() == go->name)
-        {
-            scene->RemoveEntity();
-        }
-    }
+    scene->RemoveEntity(uiHierarchy->listWidget->currentItem()->text());
     updateHierarchy();
 }
 

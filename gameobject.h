@@ -8,6 +8,8 @@ class GameObject
 {
 public:
     GameObject(QString name);
+    ~GameObject();
+
     void AddComponent(ComponentTYPE type);
 
 public:

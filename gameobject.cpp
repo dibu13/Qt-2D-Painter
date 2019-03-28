@@ -23,3 +23,12 @@ void GameObject::AddComponent(ComponentTYPE type)
     default: break;
     }
 }
+
+GameObject::~GameObject()
+{
+    foreach (Component* comp, components)
+    {
+        delete comp;
+    }
+    components.clear();
+}

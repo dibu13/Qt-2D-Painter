@@ -15,7 +15,7 @@ public:
 
 public slots:
     void AddEntity(QString name);
-    void RemoveEntity();
+    void RemoveEntity(QString name);
     void SelectEntity(QListWidgetItem* item = nullptr);
 
 public:
