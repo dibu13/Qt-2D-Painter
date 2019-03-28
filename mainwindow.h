@@ -29,6 +29,8 @@ public slots:
     void saveScene();
     void newScene();
     void openReadme();
+
+    void updateHierarchy();
 };
 
 #endif // MAINWINDOW_H

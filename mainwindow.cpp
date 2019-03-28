@@ -5,6 +5,7 @@
 #include "inspector.h"
 #include "myopenglwidget.h"
 #include "scene.h"
+#include "gameobject.h"
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -45,6 +46,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Scene
     ui->openGLWidget->scene = scene = new Scene(this);
+
+    scene->AddEntity();
+    scene->AddEntity();
+    updateHierarchy();
 }
 
 MainWindow::~MainWindow()
@@ -71,4 +76,12 @@ void MainWindow::newScene()
 void MainWindow::openReadme()
 {
     std::cout << "Open readme" << std::endl;
+}
+
+void MainWindow::updateHierarchy()
+{
+    uiHierarchy->listWidget->clear();
+    foreach (GameObject* go, scene->gameobjects) {
+        uiHierarchy->listWidget->addItem(go->name);
+    }
 }
