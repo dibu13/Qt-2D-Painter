@@ -31,6 +31,7 @@ public slots:
     void openReadme();
 
     void addEntityButtonClicked();
+    void removeEntityButtonClicked();
 
     void updateHierarchy();
 };

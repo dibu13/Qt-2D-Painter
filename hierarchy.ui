@@ -62,7 +62,7 @@
     <item>
      <widget class="QPushButton" name="removeEntityButton">
       <property name="text">
-       <string>Remove Entity</string>
+       <string>Remove selected Entity</string>
       </property>
      </widget>
     </item>

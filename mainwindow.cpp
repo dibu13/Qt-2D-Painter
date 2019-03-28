@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Hierarchy Buttons Connexions
     connect(uiHierarchy->addEntityButton, SIGNAL(clicked()), this, SLOT(addEntityButtonClicked()));
+    connect(uiHierarchy->removeEntityButton, SIGNAL(clicked()), this, SLOT(removeEntityButtonClicked()));
 
     //Menu Bar Connexions
     connect(ui->actionNewScene, SIGNAL(triggered()), this, SLOT(newScene()));
@@ -84,6 +85,17 @@ void MainWindow::openReadme()
 void MainWindow::addEntityButtonClicked()
 {
     scene->AddEntity(uiHierarchy->newEntityName->text());
+    updateHierarchy();
+}
+
+void MainWindow::removeEntityButtonClicked()
+{
+    foreach (GameObject* go, scene->gameobjects) {
+        if(uiHierarchy->listWidget->currentItem()->text() == go->name)
+        {
+            scene->RemoveEntity();
+        }
+    }
     updateHierarchy();
 }
 
