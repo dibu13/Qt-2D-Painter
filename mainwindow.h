@@ -30,6 +30,8 @@ public slots:
     void newScene();
     void openReadme();
 
+    void addEntityButtonClicked();
+
     void updateHierarchy();
 };
 

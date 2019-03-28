@@ -9,9 +9,9 @@ Scene::Scene(QWidget *parent) : QWidget(parent)
 
 }
 
-void Scene::AddEntity()
+void Scene::AddEntity(QString name)
 {
-    GameObject* go = new GameObject("Circle" + QString(gameobjects.count()));
+    GameObject* go = new GameObject(name);
     go->AddComponent(RECT_TRANSFORM);
     go->AddComponent(SHAPE_RENDERER);
     gameobjects.push_back(go);

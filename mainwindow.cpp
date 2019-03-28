@@ -37,19 +37,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->renderingDock->setWidget(renderingWidget);
     QMainWindow::tabifyDockWidget(ui->inspectorDock,ui->renderingDock);*/
 
+    // Scene
+    ui->openGLWidget->scene = scene = new Scene(this);
+
+    scene->AddEntity("Entity1");
+    scene->AddEntity("Entity2");
+    updateHierarchy();
+
+    //Hierarchy Buttons Connexions
+    connect(uiHierarchy->addEntityButton, SIGNAL(clicked()), this, SLOT(addEntityButtonClicked()));
+
     //Menu Bar Connexions
     connect(ui->actionNewScene, SIGNAL(triggered()), this, SLOT(newScene()));
     connect(ui->actionOpenScene, SIGNAL(triggered()), this, SLOT(openScene()));
     connect(ui->actionSaveScene, SIGNAL(triggered()), this, SLOT(saveScene()));
     connect(ui->actionReadme, SIGNAL(triggered()), this, SLOT(openReadme()));
     connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
-
-    // Scene
-    ui->openGLWidget->scene = scene = new Scene(this);
-
-    scene->AddEntity();
-    scene->AddEntity();
-    updateHierarchy();
 }
 
 MainWindow::~MainWindow()
@@ -76,6 +79,12 @@ void MainWindow::newScene()
 void MainWindow::openReadme()
 {
     std::cout << "Open readme" << std::endl;
+}
+
+void MainWindow::addEntityButtonClicked()
+{
+    scene->AddEntity(uiHierarchy->newEntityName->text());
+    updateHierarchy();
 }
 
 void MainWindow::updateHierarchy()

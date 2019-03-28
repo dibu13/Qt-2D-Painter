@@ -14,7 +14,7 @@ public:
     explicit Scene(QWidget *parent = nullptr);
 
 public slots:
-    void AddEntity();
+    void AddEntity(QString name);
     void RemoveEntity();
     void SelectEntity(QListWidgetItem* item = nullptr);
 
