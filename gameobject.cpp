@@ -12,12 +12,12 @@ void GameObject::AddComponent(ComponentTYPE type)
     {
     case RECT_TRANSFORM:
     {
-        components.push_back(new CompRectTransform(this));
+        components.push_back(transform = new CompRectTransform(this));
         break;
     }
     case SHAPE_RENDERER:
     {
-        components.push_back(new CompShapeRenderer(this));
+        components.push_back(shape_renderer = new CompShapeRenderer(this));
         break;
     }
     default: break;

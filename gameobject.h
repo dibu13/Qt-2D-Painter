@@ -4,6 +4,9 @@
 #include <QVector>
 #include "component.h"
 
+class CompRectTransform;
+class CompShapeRenderer;
+
 class GameObject
 {
 public:
@@ -16,6 +19,9 @@ public:
     QVector<Component*> components;
     QString name = "Empty GameObject";
     bool active = true;
+
+    CompRectTransform* transform = nullptr;
+    CompShapeRenderer* shape_renderer = nullptr;
 };
 
 #endif // GAMEOBJECT_H
