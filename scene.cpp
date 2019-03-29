@@ -16,7 +16,10 @@ void Scene::Draw(QPaintDevice* p_device, QRect display_section)
 
     for (int i = 0; i < gameobjects.count(); i++)
     {
-        gameobjects[i]->shape_renderer->Draw(p, display_section, i == selected);
+        GameObject* go = gameobjects[i];
+
+        if (go->active)
+            go->shape_renderer->Draw(p, display_section, i == selected);
     }
 }
 

@@ -24,7 +24,7 @@ public:
     float size = 50.0f;
     QColor fill_color;
     QColor stroke_color;
-    float stroke_thickness = 1;
+    double stroke_thickness = 4;
     int stroke_style = 1; // 1-5
 };
 
