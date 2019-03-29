@@ -102,6 +102,7 @@ void MainWindow::addEntityButtonClicked()
     QListWidgetItem *item = new QListWidgetItem(go->name);
     item->setData(Qt::UserRole,go->id);
     uiHierarchy->listWidget->addItem(item);
+    repaint();
 }
 
 void MainWindow::removeEntityButtonClicked()
@@ -114,4 +115,5 @@ void MainWindow::removeEntityButtonClicked()
 
         uiHierarchy->listWidget->takeItem(uiHierarchy->listWidget->currentRow());
     }
+    repaint();
 }

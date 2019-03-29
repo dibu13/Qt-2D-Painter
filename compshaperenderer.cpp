@@ -1,8 +1,6 @@
 #include "compshaperenderer.h"
 #include "gameobject.h"
 #include "comprecttransform.h"
-//#include <QPainter>
-//#include <QtCore>
 
 /*
  * Qt::SolidLine = 1
