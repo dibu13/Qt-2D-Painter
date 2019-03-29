@@ -12,6 +12,7 @@ class Scene : public QWidget
     Q_OBJECT
 public:
     explicit Scene(QWidget *parent = nullptr);
+    void Draw(QPaintDevice* p_device, QRect display_section);
 
 public slots:
     void AddEntity(QString name);

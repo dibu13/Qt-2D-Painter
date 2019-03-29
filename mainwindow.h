@@ -6,6 +6,7 @@
 namespace Ui {
 class MainWindow;
 class Hierarchy;
+class Rendering;
 }
 
 class Scene;
@@ -18,9 +19,13 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+    void paintEvent(QPaintEvent* event) override;
+
 private:
     Ui::MainWindow *ui;
     Ui::Hierarchy *uiHierarchy;
+    Ui::Rendering *uiRendering;
 
     Scene* scene = nullptr;
 

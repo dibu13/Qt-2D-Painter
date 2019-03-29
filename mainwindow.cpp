@@ -21,24 +21,24 @@ MainWindow::MainWindow(QWidget *parent) :
     hierarchyWidget->show();
     ui->hierarchyDock->setWidget(hierarchyWidget);
 
-    // Inspector
-    /*QWidget *inspectorWidget = new QWidget();
-    uiInspector->setupUi(inspectorWidget);
-    inspectorWidget->show();*/
-
-    Inspector* inspector = new Inspector();
-    inspector->show();
-    ui->inspectorDock->setWidget(inspector);
-
     /*/ Render Settings
     QWidget *renderingWidget = new QWidget();
     uiRendering->setupUi(renderingWidget);
-    renderingWidget->show();
-    ui->renderingDock->setWidget(renderingWidget);
-    QMainWindow::tabifyDockWidget(ui->inspectorDock,ui->renderingDock);*/
+    //renderingWidget->show();
+    ui->renderDock->setWidget(renderingWidget);*/
+
+    Inspector* inspector = new Inspector();
+    ui->inspectorDock->setWidget(inspector);
+
+    //QMainWindow::tabifyDockWidget(ui->inspectorDock,ui->renderDock);
+    //ui->inspectorDock->show();
+    inspector->show();
 
     // Scene
     ui->openGLWidget->scene = scene = new Scene(this);
+
+    // Hide OpenGLWidget
+    ui->openGLWidget->setHidden(true);
 
     scene->AddEntity("Entity1");
     scene->AddEntity("Entity2");
@@ -60,6 +60,24 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete uiHierarchy;
+}
+
+void MainWindow::paintEvent(QPaintEvent* event)
+{
+    QRect display_section = ui->centralWidget->geometry();
+    //QRect display_section()
+
+    std::cout << "Rect { ";
+    std::cout << display_section.x();
+    std::cout << ", ";
+    std::cout << display_section.y();
+    std::cout << ", ";
+    std::cout << display_section.width();
+    std::cout << ", ";
+    std::cout << display_section.height();
+    std::cout << " } " << std::endl;
+
+    scene->Draw(this, display_section);
 }
 
 void MainWindow::openScene()

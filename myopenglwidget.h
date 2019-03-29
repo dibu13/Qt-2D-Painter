@@ -22,9 +22,6 @@ public:
     void paintGL() override;
     //void resizeGL(int width, int height) override;
 
-    void paintEvent(QPaintEvent* event) override;
-
-
 public:
 
     Scene* scene = nullptr;
