@@ -15,13 +15,14 @@ public:
     void Draw(QPaintDevice* p_device, QRect display_section);
 
 public slots:
-    void AddEntity(QString name);
-    void RemoveEntity(QString name);
+    GameObject* AddEntity(QString name);
+    void RemoveEntity(uint id);
     void SelectEntity(QListWidgetItem* item = nullptr);
 
 public:
     QVector<GameObject*> gameobjects;
     int selected = -1;
+    uint gameObjectsId = 0;
 };
 
 #endif // SCENE_H

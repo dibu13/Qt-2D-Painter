@@ -40,10 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Hide OpenGLWidget
     ui->openGLWidget->setHidden(true);
 
-    scene->AddEntity("Entity1");
-    scene->AddEntity("Entity2");
-    updateHierarchy();
-
     //Hierarchy Buttons Connexions
     connect(uiHierarchy->addEntityButton, SIGNAL(clicked()), this, SLOT(addEntityButtonClicked()));
     connect(uiHierarchy->removeEntityButton, SIGNAL(clicked()), this, SLOT(removeEntityButtonClicked()));
@@ -66,7 +62,7 @@ void MainWindow::paintEvent(QPaintEvent* event)
 {
     QRect display_section = ui->centralWidget->geometry();
     //QRect display_section()
-
+/*
     std::cout << "Rect { ";
     std::cout << display_section.x();
     std::cout << ", ";
@@ -76,7 +72,7 @@ void MainWindow::paintEvent(QPaintEvent* event)
     std::cout << ", ";
     std::cout << display_section.height();
     std::cout << " } " << std::endl;
-
+*/
     scene->Draw(this, display_section);
 }
 
@@ -102,23 +98,20 @@ void MainWindow::openReadme()
 
 void MainWindow::addEntityButtonClicked()
 {
-    scene->AddEntity(uiHierarchy->newEntityName->text());
-    updateHierarchy();
+    GameObject* go = scene->AddEntity(uiHierarchy->newEntityName->text());
+    QListWidgetItem *item = new QListWidgetItem(go->name);
+    item->setData(Qt::UserRole,go->id);
+    uiHierarchy->listWidget->addItem(item);
 }
 
 void MainWindow::removeEntityButtonClicked()
 {
     if(uiHierarchy->listWidget->currentItem())
     {
-        scene->RemoveEntity(uiHierarchy->listWidget->currentItem()->text());
-        updateHierarchy();
-    }
-}
+        QVariant v = uiHierarchy->listWidget->currentItem()->data(Qt::UserRole);
+        uint id = v.value<uint>();
+        scene->RemoveEntity(id);
 
-void MainWindow::updateHierarchy()
-{
-    uiHierarchy->listWidget->clear();
-    foreach (GameObject* go, scene->gameobjects) {
-        uiHierarchy->listWidget->addItem(go->name);
+        uiHierarchy->listWidget->takeItem(uiHierarchy->listWidget->currentRow());
     }
 }

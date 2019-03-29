@@ -37,8 +37,6 @@ public slots:
 
     void addEntityButtonClicked();
     void removeEntityButtonClicked();
-
-    void updateHierarchy();
 };
 
 #endif // MAINWINDOW_H

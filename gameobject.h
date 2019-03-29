@@ -15,6 +15,7 @@ public:
 public:
     QVector<Component*> components;
     QString name = "Empty GameObject";
+    uint id = 0;
     bool active = true;
 };
 
