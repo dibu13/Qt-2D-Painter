@@ -11,8 +11,13 @@ void Scene::Draw(QPaintDevice* p_device, QRect display_section)
 {
     QPainter p(p_device);
 
+    // Draw border
     p.drawRect(display_section);
-    p.drawLine(200, 200, 400, 400);
+
+    for (int i = 0; i < gameobjects.count(); i++)
+    {
+        gameobjects[i]->shape_renderer->Draw(p, display_section, i == selected);
+    }
 }
 
 GameObject* Scene::AddEntity(QString name)
