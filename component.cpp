@@ -4,3 +4,6 @@ Component::Component(GameObject* gameobject, ComponentTYPE type) :
     gameobject(gameobject),
     type(type)
 {}
+
+Component::~Component()
+{}

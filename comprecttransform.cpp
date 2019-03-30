@@ -9,3 +9,19 @@ CompRectTransform::CompRectTransform(GameObject* gameobject, float p_x, float p_
     scale_y(s_y)
 {
 }
+
+void CompRectTransform::Save(QDataStream& in)
+{
+    in << pos_x;
+    in << pos_y;
+    in << scale_x;
+    in << scale_y;
+}
+
+void CompRectTransform::Load(QDataStream& out)
+{
+    out >> pos_x;
+    out >> pos_y;
+    out >> scale_x;
+    out >> scale_y;
+}
