@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //renderingWidget->show();
     ui->renderDock->setWidget(renderingWidget);*/
 
-    Inspector* inspector = new Inspector();
+    inspector = new Inspector();
     ui->inspectorDock->setWidget(inspector);
 
     //QMainWindow::tabifyDockWidget(ui->inspectorDock,ui->renderDock);
@@ -40,9 +40,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // Hide OpenGLWidget
     ui->openGLWidget->setHidden(true);
 
-    //Hierarchy Buttons Connexions
+    //Hierarchy Connexions
     connect(uiHierarchy->addEntityButton, SIGNAL(clicked()), this, SLOT(addEntityButtonClicked()));
     connect(uiHierarchy->removeEntityButton, SIGNAL(clicked()), this, SLOT(removeEntityButtonClicked()));
+
+    connect(uiHierarchy->listWidget, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(changeSelectedGemaObject()));
 
     //Menu Bar Connexions
     connect(ui->actionNewScene, SIGNAL(triggered()), this, SLOT(newScene()));
@@ -116,4 +118,17 @@ void MainWindow::removeEntityButtonClicked()
         uiHierarchy->listWidget->takeItem(uiHierarchy->listWidget->currentRow());
     }
     repaint();
+}
+
+void MainWindow::changeSelectedGemaObject()
+{
+    QVariant v = uiHierarchy->listWidget->currentItem()->data(Qt::UserRole);
+    uint id = v.value<uint>();
+    foreach (GameObject* go, scene->gameobjects) {
+        if(id == go->id)
+        {
+            inspector->selectedGameObject = go;
+        }
+    }
+    inspector->reloadInspector();
 }

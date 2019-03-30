@@ -1,4 +1,5 @@
 #include "inspector.h"
+#include "gameobject.h"
 #include "ui_gameobjectview.h"
 #include "ui_comprecttransformview.h"
 #include "ui_compshaperendererview.h"
@@ -32,4 +33,10 @@ Inspector::~Inspector()
     delete uiGameObjectView;
     delete uiComponentTransformView;
     delete uiCompShapeRendererView;
+}
+
+void Inspector::reloadInspector()
+{
+    //GameObjectView
+    uiGameObjectView->checkBox->setChecked(selectedGameObject->active);
 }

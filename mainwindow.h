@@ -9,6 +9,7 @@ class Hierarchy;
 class Rendering;
 }
 
+class Inspector;
 class Scene;
 
 class MainWindow : public QMainWindow
@@ -26,6 +27,7 @@ private:
     Ui::MainWindow *ui;
     Ui::Hierarchy *uiHierarchy;
     Ui::Rendering *uiRendering;
+    Inspector* inspector;
 
     Scene* scene = nullptr;
 
@@ -34,6 +36,8 @@ public slots:
     void saveScene();
     void newScene();
     void openReadme();
+
+    void changeSelectedGemaObject();
 
     void addEntityButtonClicked();
     void removeEntityButtonClicked();

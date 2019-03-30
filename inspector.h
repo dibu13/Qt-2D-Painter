@@ -19,7 +19,9 @@ public:
     explicit Inspector(QWidget *parent = nullptr);
     ~Inspector();
 
-    GameObject* reference = nullptr;
+    GameObject* selectedGameObject = nullptr;
+
+    void reloadInspector();
 
 private:
     Ui::gameObjectView *uiGameObjectView;
