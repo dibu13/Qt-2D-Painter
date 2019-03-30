@@ -4,7 +4,7 @@
 #include "component.h"
 #include <QPainter>
 
-enum SHAPE
+enum SHAPE : uint
 {
     CIRCLE,
     RECT
@@ -18,6 +18,9 @@ public:
     CompShapeRenderer(GameObject* gameobject = nullptr);
 
     void Draw(QPainter& painter, QRect display_section, bool selected = false);
+
+    void Save(QDataStream& stream) override;
+    void Load(QDataStream& stream) override;
 
 public:
     SHAPE shape = CIRCLE;

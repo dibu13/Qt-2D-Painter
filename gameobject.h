@@ -10,10 +10,12 @@ class CompShapeRenderer;
 class GameObject
 {
 public:
-    GameObject(QString name);
+    GameObject(QString name = "unnamed");
     ~GameObject();
 
-    void AddComponent(ComponentTYPE type);
+    Component* AddComponent(ComponentTYPE type);
+    void Save(QDataStream& stream);
+    void Load(QDataStream& stream);
 
 public:
     QVector<Component*> components;

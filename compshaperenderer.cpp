@@ -43,3 +43,28 @@ void CompShapeRenderer::Draw(QPainter& painter, QRect display_section, bool sele
     }
     }
 }
+
+void CompShapeRenderer::Save(QDataStream& in)
+{
+    in << shape;
+    in << size;
+    in << fill_color;
+    in << stroke_color;
+    in << stroke_thickness;
+    in << stroke_style;
+
+}
+
+void CompShapeRenderer::Load(QDataStream& out)
+{
+    uint type;
+    out >> type;
+    shape = SHAPE(type);
+
+    out >> size;
+    out >> fill_color;
+    out >> stroke_color;
+    out >> stroke_thickness;
+    out >> stroke_style;
+
+}
