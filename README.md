@@ -36,5 +36,16 @@ Allows to see and edit the position and the scale of the entity
   * **Stroke Thickness**: Modifies the thickness of the strokes line.
   * **Stroke Style**: Select the line style. None, Solid, Dash, Dot, Dash dot and Dash dot dot.
 ### Scene
-Draws all the enties.
+Draws all the entities.
 ## QT Features implemented
+* Slots
+* QApplication & QMainWindow
+* QToolBar &  QMenuBar
+* QDesktopServices & QUrl
+* QMessageBox
+* QFile & QDataStream
+* QDockWidget (Hierarchy and Inspector)
+* QVector
+* QQSpacerItem
+* QPainter
+* QColor & QColorDialog
