@@ -27,6 +27,7 @@ Inspector::Inspector(QWidget *parent) :
     uiCompShapeRendererView->shapeCombo->addItem("Circle");
     uiCompShapeRendererView->shapeCombo->addItem("Rectangle");
 
+    uiCompShapeRendererView->strokeCombo->addItem("None");
     uiCompShapeRendererView->strokeCombo->addItem("Solid");
     uiCompShapeRendererView->strokeCombo->addItem("Dash");
     uiCompShapeRendererView->strokeCombo->addItem("Dot");
@@ -45,9 +46,18 @@ Inspector::Inspector(QWidget *parent) :
     connect(uiGameObjectView->checkBox, SIGNAL(clicked()), this, SLOT(changeGameObjectCheckBox()));
 
     connect(uiComponentTransformView->posXInput, SIGNAL(valueChanged(double)), this, SLOT(changePosX()));
+    connect(uiComponentTransformView->posYInput, SIGNAL(valueChanged(double)), this, SLOT(changePosY()));
+    connect(uiComponentTransformView->scaleXInput, SIGNAL(valueChanged(double)), this, SLOT(changeScaleX()));
+    connect(uiComponentTransformView->scaleYInput, SIGNAL(valueChanged(double)), this, SLOT(changeScaleY()));
 
     connect(uiCompShapeRendererView->fillColorButon, SIGNAL(clicked()), this, SLOT(FillColor()));
     connect(uiCompShapeRendererView->strokeColorButton, SIGNAL(clicked()), this, SLOT(StrokeColor()));
+
+    connect(uiCompShapeRendererView->sizeInput, SIGNAL(valueChanged(double)), this, SLOT(changeSize()));
+    connect(uiCompShapeRendererView->strokeInput, SIGNAL(valueChanged(double)), this, SLOT(changeStrokeThick()));
+
+    connect(uiCompShapeRendererView->shapeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeShape()));
+    connect(uiCompShapeRendererView->strokeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeStrokeStyle()));
 }
 
 Inspector::~Inspector()
@@ -67,47 +77,30 @@ void Inspector::reloadInspector()
 
         //GameObjectView
         uiGameObjectView->checkBox->setChecked(selectedGameObject->active);
+        uiGameObjectView->label->setText(selectedGameObject->name);
 
         //ComponentTransformView
-        uiComponentTransformView->posXInput->setValue(selectedGameObject->transform->pos_x);
-        uiComponentTransformView->posYInput->setValue(selectedGameObject->transform->pos_y);
+        uiComponentTransformView->posXInput->setValue(static_cast<double>(selectedGameObject->transform->pos_x));
+        uiComponentTransformView->posYInput->setValue(static_cast<double>(selectedGameObject->transform->pos_y));
 
-        uiComponentTransformView->scaleXInput->setValue(selectedGameObject->transform->scale_x);
-        uiComponentTransformView->scaleYInput->setValue(selectedGameObject->transform->scale_y);
+        uiComponentTransformView->scaleXInput->setValue(static_cast<double>(selectedGameObject->transform->scale_x));
+        uiComponentTransformView->scaleYInput->setValue(static_cast<double>(selectedGameObject->transform->scale_y));
 
         //ComponentShapeRendererView
-        if(selectedGameObject->shape_renderer->shape == RECT)
-            uiCompShapeRendererView->shapeCombo->setCurrentIndex(0);
-        if(selectedGameObject->shape_renderer->shape == CIRCLE)
-            uiCompShapeRendererView->shapeCombo->setCurrentIndex(1);
+        uiCompShapeRendererView->shapeCombo->setCurrentIndex(static_cast<int>(selectedGameObject->shape_renderer->shape));
 
-        uiCompShapeRendererView->sizeInput->setValue(selectedGameObject->shape_renderer->size);
+        uiCompShapeRendererView->sizeInput->setValue(static_cast<double>(selectedGameObject->shape_renderer->size));
 
-        int colorR,colorG,colorB;
-        selectedGameObject->shape_renderer->fill_color.getRgb(&colorR,&colorG,&colorB);
-        QString qss = QString("background-color: rgb(%1, %2, %3)").arg(colorR).arg(colorG).arg(colorB);
-        uiCompShapeRendererView->fillColorButon->setStyleSheet(qss);
-        //std::cout << colorR << "," << colorG << "," << colorB << std::endl;
-        //std::cout << qss.toStdString() << std::endl;
+        QColor c = selectedGameObject->shape_renderer->fill_color;
+        uiCompShapeRendererView->fillColorButon->setStyleSheet(
+                    QString("background-color: rgb(%1, %2, %3)").arg(c.red()).arg(c.green()).arg(c.blue()));
 
-        selectedGameObject->shape_renderer->stroke_color.getRgb(&colorR,&colorG,&colorB);
-        qss = QString("background-color: rgb(%1, %2, %3)").arg(colorR).arg(colorG).arg(colorB);
-        uiCompShapeRendererView->strokeColorButton->setStyleSheet(qss);
-        //std::cout << colorR << "," << colorG << "," << colorB << std::endl;
-        //std::cout << qss.toStdString() << std::endl;
+        c = selectedGameObject->shape_renderer->stroke_color;
+        uiCompShapeRendererView->strokeColorButton->setStyleSheet(
+                    QString("background-color: rgb(%1, %2, %3)").arg(c.red()).arg(c.green()).arg(c.blue()));
 
         uiCompShapeRendererView->strokeInput->setValue(selectedGameObject->shape_renderer->stroke_thickness);
-
-        if(selectedGameObject->shape_renderer->stroke_style == 1)
-            uiCompShapeRendererView->strokeCombo->setCurrentIndex(0);
-        if(selectedGameObject->shape_renderer->stroke_style == 2)
-            uiCompShapeRendererView->strokeCombo->setCurrentIndex(1);
-        if(selectedGameObject->shape_renderer->stroke_style == 3)
-            uiCompShapeRendererView->strokeCombo->setCurrentIndex(2);
-        if(selectedGameObject->shape_renderer->stroke_style == 4)
-            uiCompShapeRendererView->strokeCombo->setCurrentIndex(3);
-        if(selectedGameObject->shape_renderer->stroke_style == 5)
-            uiCompShapeRendererView->strokeCombo->setCurrentIndex(4);
+        uiCompShapeRendererView->strokeCombo->setCurrentIndex(selectedGameObject->shape_renderer->stroke_style);
     }
     else
     {
@@ -119,25 +112,19 @@ void Inspector::reloadInspector()
 
 void Inspector::FillColor()
 {
-    if (selectedGameObject != nullptr)
-    {
-        ColorDialog(selectedGameObject->shape_renderer->fill_color);
-        reloadInspector();
-    }
+    ColorDialog(selectedGameObject->shape_renderer->fill_color);
+    reloadInspector();
 }
 
 void Inspector::StrokeColor()
 {
-    if (selectedGameObject != nullptr)
-    {
-        ColorDialog(selectedGameObject->shape_renderer->stroke_color);
-        reloadInspector();
-    }
+    ColorDialog(selectedGameObject->shape_renderer->stroke_color);
+    reloadInspector();
 }
 
 void Inspector::ColorDialog(QColor& color)
 {
-    QColor new_color = QColorDialog::getColor(color, parentWidget(), "Choose color");
+    QColor new_color = QColorDialog::getColor(color, this, "Choose color");
 
     if (new_color.isValid())
     {
@@ -147,20 +134,66 @@ void Inspector::ColorDialog(QColor& color)
 
 void Inspector::changeGameObjectCheckBox()
 {
-    if(selectedGameObject != nullptr)
-    {
-        std::cout << "###############################" << std::endl;
-        selectedGameObject->active = uiGameObjectView->checkBox->isChecked();
-        parentWidget()->repaint();
-    }
+    selectedGameObject->active = uiGameObjectView->checkBox->isChecked();
 }
 
 void Inspector::changePosX()
 {
+    selectedGameObject->transform->pos_x = static_cast<float>(uiComponentTransformView->posXInput->value());
+}
+
+void Inspector::changePosY()
+{
     if(selectedGameObject != nullptr)
     {
-        selectedGameObject->transform->pos_x = uiComponentTransformView->posXInput->value();
-        std::cout << uiComponentTransformView->posXInput->value() << std::endl;
-        parentWidget()->repaint();
+        selectedGameObject->transform->pos_y = uiComponentTransformView->posYInput->value();
+    }
+}
+
+void Inspector::changeScaleX()
+{
+    if(selectedGameObject != nullptr)
+    {
+        selectedGameObject->transform->scale_x = uiComponentTransformView->scaleXInput->value();
+    }
+}
+
+void Inspector::changeScaleY()
+{
+    if(selectedGameObject != nullptr)
+    {
+        selectedGameObject->transform->scale_y = uiComponentTransformView->scaleYInput->value();
+    }
+}
+
+void Inspector::changeSize()
+{
+    if(selectedGameObject != nullptr)
+    {
+        selectedGameObject->shape_renderer->size = uiCompShapeRendererView->sizeInput->value();
+    }
+}
+
+void Inspector::changeStrokeThick()
+{
+    if(selectedGameObject != nullptr)
+    {
+        selectedGameObject->shape_renderer->stroke_thickness = uiCompShapeRendererView->strokeInput->value();
+    }
+}
+
+void Inspector::changeShape()
+{
+    if(selectedGameObject != nullptr)
+    {
+        selectedGameObject->shape_renderer->shape = static_cast<SHAPE>(uiCompShapeRendererView->shapeCombo->currentIndex());
+    }
+}
+
+void Inspector::changeStrokeStyle()
+{
+    if(selectedGameObject != nullptr)
+    {
+        selectedGameObject->shape_renderer->stroke_style = static_cast<SHAPE>(uiCompShapeRendererView->strokeCombo->currentIndex());
     }
 }

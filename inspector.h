@@ -30,6 +30,13 @@ public slots:
     void StrokeColor();
     void changeGameObjectCheckBox();
     void changePosX();
+    void changePosY();
+    void changeScaleX();
+    void changeScaleY();
+    void changeSize();
+    void changeStrokeThick();
+    void changeShape();
+    void changeStrokeStyle();
 
 public:
 

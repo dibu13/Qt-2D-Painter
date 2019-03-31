@@ -28,7 +28,7 @@ public:
     QColor fill_color;
     QColor stroke_color;
     double stroke_thickness = 4;
-    int stroke_style = 1; // 1-5
+    int stroke_style = 0; // 0-5
 };
 
 #endif // COMPSHAPERENDERER_H

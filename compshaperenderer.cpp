@@ -4,8 +4,7 @@
 #include "iostream"
 
 CompShapeRenderer::CompShapeRenderer(GameObject* gameobject) :
-    Component (gameobject, SHAPE_RENDERER),
-    stroke_style(Qt::SolidLine)
+    Component (gameobject, SHAPE_RENDERER)
 {
     fill_color = Qt::red;
     stroke_color = Qt::black;
@@ -13,7 +12,9 @@ CompShapeRenderer::CompShapeRenderer(GameObject* gameobject) :
 
 void CompShapeRenderer::Draw(QPainter& painter, QRect display_section, bool selected)
 {
-    painter.setPen(QPen(stroke_color, stroke_thickness, Qt::PenStyle(stroke_style)));
+    if(stroke_style > 0)
+        painter.setPen(QPen(stroke_color, stroke_thickness, Qt::PenStyle(stroke_style)));
+
     painter.setBrush(QBrush(fill_color));
 
     CompRectTransform* t = gameobject->transform;
@@ -60,7 +61,7 @@ void CompShapeRenderer::Load(QDataStream& in)
     in >> stroke_thickness;
     in >> stroke_style;
 
-    std::string strokes[5] = { "SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine" };
+    std::string strokes[6] = {"None", "SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine" };
 
     std::cout << "Shape(" << (type == 0 ? "Circle" : "Rect")<< ","
               << size << ","
