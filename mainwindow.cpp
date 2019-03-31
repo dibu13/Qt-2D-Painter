@@ -69,6 +69,9 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete uiHierarchy;
+    delete inspector;
+
+    delete scene;
 }
 
 void MainWindow::paintEvent(QPaintEvent* event)
