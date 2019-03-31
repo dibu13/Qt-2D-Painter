@@ -1,7 +1,7 @@
 #include "compshaperenderer.h"
 #include "gameobject.h"
 #include "comprecttransform.h"
-#include "iostream"
+#include <iostream>
 
 CompShapeRenderer::CompShapeRenderer(GameObject* gameobject) :
     Component (gameobject, SHAPE_RENDERER)
