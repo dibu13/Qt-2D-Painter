@@ -7,6 +7,7 @@
 #include "scene.h"
 #include "gameobject.h"
 #include <iostream>
+#include <QColorDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     newScene();
     setWindowTitle(scene->name);
 
+    QColor c = scene->background_color;
+    uiHierarchy->backGroundColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3)").arg(c.red()).arg(c.green()).arg(c.blue()));
 
     // Hide OpenGLWidget
     ui->openGLWidget->setHidden(true);
@@ -55,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSaveScene, SIGNAL(triggered()), this, SLOT(saveScene()));
     connect(ui->actionReadme, SIGNAL(triggered()), this, SLOT(openReadme()));
     connect(ui->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+    connect(uiHierarchy->backGroundColorButton, SIGNAL(clicked()), this, SLOT(changeBackGroundColor()));
 }
 
 MainWindow::~MainWindow()
@@ -74,6 +79,7 @@ void MainWindow::openScene()
 {
     std::cout << "Open scene" << std::endl;
     scene->Load();
+    setWindowTitle(scene->name);
     uiHierarchy->listWidget->clear();
 
     foreach (GameObject* go, scene->gameobjects)
@@ -98,6 +104,7 @@ void MainWindow::newScene()
 {
     std::cout << "New scene" << std::endl;
     scene->Clear();
+    setWindowTitle(scene->name);
     uiHierarchy->listWidget->clear();
     inspector->selectedGameObject = nullptr;
     inspector->reloadInspector();
@@ -167,4 +174,15 @@ void MainWindow::changeSelectedGemaObject()
             }
         }
     }
+}
+
+void MainWindow::changeBackGroundColor()
+{
+    QColor new_color = QColorDialog::getColor(scene->background_color, this, "Choose color");
+
+    if (new_color.isValid())
+    {
+        scene->background_color = new_color;
+    }
+    uiHierarchy->backGroundColorButton->setStyleSheet(QString("background-color: rgb(%1, %2, %3)").arg(scene->background_color.red()).arg(scene->background_color.green()).arg(scene->background_color.blue()));
 }

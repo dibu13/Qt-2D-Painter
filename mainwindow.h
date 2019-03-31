@@ -41,6 +41,8 @@ public slots:
 
     void addEntityButtonClicked();
     void removeEntityButtonClicked();
+
+    void changeBackGroundColor();
 };
 
 #endif // MAINWINDOW_H
