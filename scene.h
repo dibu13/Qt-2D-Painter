@@ -31,6 +31,10 @@ public:
     QColor background_color;
     int selected = -1;
     uint gameObjectsId = 0;
+
+private:
+    float aspectRatioH = 0.0f;
+    float aspectRatioV = 0.0f;
 };
 
 #endif // SCENE_H

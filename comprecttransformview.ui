@@ -52,7 +52,17 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="2">
-       <widget class="QDoubleSpinBox" name="posYInput"/>
+       <widget class="QDoubleSpinBox" name="posYInput">
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>10000.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>5.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_2">
@@ -62,7 +72,17 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="posXInput"/>
+       <widget class="QDoubleSpinBox" name="posXInput">
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>10000.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>5.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_3">
@@ -72,10 +92,18 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QDoubleSpinBox" name="scaleXInput"/>
+       <widget class="QDoubleSpinBox" name="scaleXInput">
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QDoubleSpinBox" name="scaleYInput"/>
+       <widget class="QDoubleSpinBox" name="scaleYInput">
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
