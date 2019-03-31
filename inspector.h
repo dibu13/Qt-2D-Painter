@@ -28,6 +28,8 @@ public slots:
 
     void FillColor();
     void StrokeColor();
+    void changeGameObjectCheckBox();
+    void changePosX();
 
 public:
 

@@ -42,6 +42,10 @@ Inspector::Inspector(QWidget *parent) :
     setLayout(layout);
 
     // Connect Slots
+    connect(uiGameObjectView->checkBox, SIGNAL(clicked()), this, SLOT(changeGameObjectCheckBox()));
+
+    connect(uiComponentTransformView->posXInput, SIGNAL(valueChanged(double)), this, SLOT(changePosX()));
+
     connect(uiCompShapeRendererView->fillColorButon, SIGNAL(clicked()), this, SLOT(FillColor()));
     connect(uiCompShapeRendererView->strokeColorButton, SIGNAL(clicked()), this, SLOT(StrokeColor()));
 }
@@ -138,5 +142,25 @@ void Inspector::ColorDialog(QColor& color)
     if (new_color.isValid())
     {
         color = new_color;
+    }
+}
+
+void Inspector::changeGameObjectCheckBox()
+{
+    if(selectedGameObject != nullptr)
+    {
+        std::cout << "###############################" << std::endl;
+        selectedGameObject->active = uiGameObjectView->checkBox->isChecked();
+        parentWidget()->repaint();
+    }
+}
+
+void Inspector::changePosX()
+{
+    if(selectedGameObject != nullptr)
+    {
+        selectedGameObject->transform->pos_x = uiComponentTransformView->posXInput->value();
+        std::cout << uiComponentTransformView->posXInput->value() << std::endl;
+        parentWidget()->repaint();
     }
 }

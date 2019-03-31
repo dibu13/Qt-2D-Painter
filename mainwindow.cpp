@@ -67,6 +67,7 @@ void MainWindow::paintEvent(QPaintEvent* event)
 {
     QRect display_section = ui->centralWidget->geometry();
     scene->Draw(this, display_section);
+    std::cout << "Paint event" << std::endl;
 }
 
 void MainWindow::openScene()
