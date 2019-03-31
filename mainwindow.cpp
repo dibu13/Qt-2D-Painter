@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Hide OpenGLWidget
     ui->openGLWidget->setHidden(true);
+    //ui->menuBar->setVisible(false);
 
     //Hierarchy Connexions
     connect(uiHierarchy->addEntityButton, SIGNAL(clicked()), this, SLOT(addEntityButtonClicked()));
@@ -73,7 +74,7 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent* event)
 {
     QRect display_section = ui->centralWidget->geometry();
-    //update(display_section);
+    update(display_section);
     scene->Draw(this, display_section);
 }
 
