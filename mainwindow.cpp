@@ -8,6 +8,8 @@
 #include "gameobject.h"
 #include <iostream>
 #include <QColorDialog>
+#include <QDesktopServices>
+#include <QUrl>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -71,7 +73,7 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent* event)
 {
     QRect display_section = ui->centralWidget->geometry();
-    update(display_section);
+    //update(display_section);
     scene->Draw(this, display_section);
 }
 
@@ -114,6 +116,7 @@ void MainWindow::newScene()
 void MainWindow::openReadme()
 {
     std::cout << "Open readme" << std::endl;
+    QDesktopServices::openUrl(QUrl("https://github.com/dibu13/Qt-2D-Painter"));
 }
 
 void MainWindow::addEntityButtonClicked()
