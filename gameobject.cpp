@@ -47,7 +47,7 @@ void GameObject::Load(QDataStream& in)
     in >> id;
     in >> active;
 
-    std::cout << "Loaded: " << (active ? "+" : "-") << "[" << id << "]" << name.toStdString() << "{ ";
+    std::cout << (active ? "+" : "-") << "[" << id << "]" << name.toStdString() << "\t{ ";
 
     int comp_count;
     in >> comp_count;

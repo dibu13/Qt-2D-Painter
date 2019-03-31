@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //renderingWidget->show();
     ui->renderDock->setWidget(renderingWidget);*/
 
-    inspector = new Inspector();
+    inspector = new Inspector(this);
     ui->inspectorDock->setWidget(inspector);
 
     //QMainWindow::tabifyDockWidget(ui->inspectorDock,ui->renderDock);
@@ -36,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Scene
     ui->openGLWidget->scene = scene = new Scene(this);
+    newScene();
+    setWindowTitle(scene->name);
+
 
     // Hide OpenGLWidget
     ui->openGLWidget->setHidden(true);
@@ -63,18 +66,6 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent* event)
 {
     QRect display_section = ui->centralWidget->geometry();
-    //QRect display_section()
-/*
-    std::cout << "Rect { ";
-    std::cout << display_section.x();
-    std::cout << ", ";
-    std::cout << display_section.y();
-    std::cout << ", ";
-    std::cout << display_section.width();
-    std::cout << ", ";
-    std::cout << display_section.height();
-    std::cout << " } " << std::endl;
-*/
     scene->Draw(this, display_section);
 }
 
@@ -82,6 +73,18 @@ void MainWindow::openScene()
 {
     std::cout << "Open scene" << std::endl;
     scene->Load();
+    uiHierarchy->listWidget->clear();
+
+    foreach (GameObject* go, scene->gameobjects)
+    {
+        QListWidgetItem *item = new QListWidgetItem(go->name);
+        item->setData(Qt::UserRole,go->id);
+        uiHierarchy->listWidget->addItem(item);
+    }
+
+    inspector->selectedGameObject = (scene->selected >= 0 ? scene->gameobjects[scene->selected] : nullptr);
+    inspector->reloadInspector();
+    repaint();
 }
 
 void MainWindow::saveScene()
@@ -93,6 +96,11 @@ void MainWindow::saveScene()
 void MainWindow::newScene()
 {
     std::cout << "New scene" << std::endl;
+    scene->Clear();
+    uiHierarchy->listWidget->clear();
+    inspector->selectedGameObject = nullptr;
+    inspector->reloadInspector();
+    repaint();
 }
 
 void MainWindow::openReadme()
@@ -102,11 +110,18 @@ void MainWindow::openReadme()
 
 void MainWindow::addEntityButtonClicked()
 {
-    GameObject* go = scene->AddEntity(uiHierarchy->newEntityName->text());
-    QListWidgetItem *item = new QListWidgetItem(go->name);
-    item->setData(Qt::UserRole,go->id);
-    uiHierarchy->listWidget->addItem(item);
-    repaint();
+    if (!uiHierarchy->newEntityName->text().isEmpty())
+    {
+        GameObject* go = scene->AddEntity(uiHierarchy->newEntityName->text());
+        QListWidgetItem *item = new QListWidgetItem(go->name);
+        item->setData(Qt::UserRole,go->id);
+        uiHierarchy->listWidget->addItem(item);
+
+        scene->selected = scene->gameobjects.count() - 1;
+        inspector->selectedGameObject = go;
+        inspector->reloadInspector();
+        repaint();
+    }
 }
 
 void MainWindow::removeEntityButtonClicked()
@@ -114,23 +129,41 @@ void MainWindow::removeEntityButtonClicked()
     if(uiHierarchy->listWidget->currentItem())
     {
         QVariant v = uiHierarchy->listWidget->currentItem()->data(Qt::UserRole);
+        uiHierarchy->listWidget->takeItem(uiHierarchy->listWidget->currentRow());
+
         uint id = v.value<uint>();
         scene->RemoveEntity(id);
+        scene->selected--;
 
-        uiHierarchy->listWidget->takeItem(uiHierarchy->listWidget->currentRow());
+        if (scene->gameobjects.isEmpty())
+        {
+            scene->selected = -1;
+            inspector->selectedGameObject = nullptr;
+            inspector->reloadInspector();
+        }
     }
+
     repaint();
 }
 
 void MainWindow::changeSelectedGemaObject()
 {
-    QVariant v = uiHierarchy->listWidget->currentItem()->data(Qt::UserRole);
-    uint id = v.value<uint>();
-    foreach (GameObject* go, scene->gameobjects) {
-        if(id == go->id)
+    if (uiHierarchy->listWidget->currentItem())
+    {
+        QVariant v = uiHierarchy->listWidget->currentItem()->data(Qt::UserRole);
+        uint id = v.value<uint>();
+
+        for (int i = 0; i < scene->gameobjects.count(); i++)
         {
-            inspector->selectedGameObject = go;
+            GameObject* go = scene->gameobjects[i];
+
+            if(id == go->id)
+            {
+                scene->selected = i;
+                inspector->selectedGameObject = go;
+                inspector->reloadInspector();
+                return;
+            }
         }
     }
-    inspector->reloadInspector();
 }

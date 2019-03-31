@@ -8,13 +8,40 @@
 #include <iostream>
 
 Scene::Scene(QWidget *parent) : QWidget(parent)
-{}
+{
+    background_color = Qt::white;
+    background_color.setAlphaF(0.5);
+}
+
+Scene::~Scene()
+{
+    Clear();
+
+    name = "untitled_scene";
+    selected = -1;
+    gameObjectsId = 0;
+}
+
+void Scene::Clear()
+{
+    foreach (GameObject* go, gameobjects)
+    {
+        delete go;
+        gameobjects.pop_front();
+    }
+
+    gameobjects.clear();
+
+    background_color = Qt::white;
+    background_color.setAlphaF(0.5);
+}
 
 void Scene::Draw(QPaintDevice* p_device, QRect display_section)
 {
     QPainter p(p_device);
 
     // Draw border
+    p.setBrush(QBrush(background_color));
     p.drawRect(display_section);
 
     for (int i = 0; i < gameobjects.count(); i++)
@@ -56,31 +83,39 @@ void Scene::SelectEntity(QListWidgetItem* item)
 
 void Scene::Save()
 {
-    QString fileName = QFileDialog::getSaveFileName(this,
-            tr("Save Scene"), "", tr("Scene (*.scene);;All Files (*)"));
-
-    if (!fileName.isEmpty())
+    if (gameobjects.isEmpty())
     {
-        QFile file(fileName);
+        QMessageBox::information(this, tr("Empty Scene"), tr("Scene is empty"));
+    }
+    else
+    {
+        QString fileName = QFileDialog::getSaveFileName(this,
+                tr("Save Scene"), "", tr("Scene (*.scene);;All Files (*)"));
 
-        if (file.open(QIODevice::WriteOnly))
+        if (!fileName.isEmpty())
         {
-            QDataStream out(&file);
-            out.setVersion(QDataStream::Qt_4_5);
+            QFile file(fileName);
 
-            out << name;
-            out << selected;
-            out << gameObjectsId;
-
-            out << gameobjects.count();
-            foreach (GameObject* go, gameobjects)
+            if (file.open(QIODevice::WriteOnly))
             {
-                go->Save(out);
+                QDataStream out(&file);
+                out.setVersion(QDataStream::Qt_4_5);
+
+                out << gameobjects.count();
+                foreach (GameObject* go, gameobjects)
+                {
+                    go->Save(out);
+                }
+
+                out << name;
+                out << selected;
+                out << gameObjectsId;
+                out << background_color;
             }
-        }
-        else
-        {
-            QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+            else
+            {
+                QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+            }
         }
     }
 }
@@ -88,7 +123,7 @@ void Scene::Save()
 void Scene::Load()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-            tr("Load Scene"), "", tr("Scene (*.scene);;All Files (*)"));
+            tr("Load Scene"), "", tr("Scene (*.scene)"));
 
         if (!fileName.isEmpty())
         {
@@ -99,39 +134,30 @@ void Scene::Load()
                 QDataStream in(&file);
                 in.setVersion(QDataStream::Qt_4_5);
 
-                in >> name;
-                in >> selected;
-                in >> gameObjectsId;
-
                 int go_count;
                 in >> go_count;
 
-
                 if (go_count > 0)
                 {
-                    foreach (GameObject* go, gameobjects)
-                    {
-                        delete go;
-                        gameobjects.pop_front();
-                    }
-
-                    gameobjects.clear();
-
+                    std::cout << "Loaded:" << std::endl;
+                    Clear();
+                    GameObject* go = nullptr;
                     for (int i = 0; i < go_count; i++)
                     {
-                        GameObject* go = new GameObject();
+                        gameobjects.push_back(go = new GameObject());
+                        std::cout << "   ";
                         go->Load(in);
-                        gameobjects.push_back(go);
-
                     }
+
+                    in >> name;
+                    in >> selected;
+                    in >> gameObjectsId;
+                    in >> background_color;
                 }
                 else
                 {
                     QMessageBox::information(this, tr("Empty Scene"), tr("The scene you are attempting to open is empty."));
                 }
-
-                // set selected on hierarchy
-                //if (selected >= 0) {}
             }
             else
             {
