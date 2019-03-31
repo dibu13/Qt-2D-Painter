@@ -6,7 +6,6 @@
 class QListWidgetItem;
 class GameObject;
 
-
 class Scene : public QWidget
 {
     Q_OBJECT
