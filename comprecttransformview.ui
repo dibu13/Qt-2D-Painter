@@ -52,7 +52,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="2">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+       <widget class="QDoubleSpinBox" name="posYInput"/>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_2">
@@ -62,7 +62,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+       <widget class="QDoubleSpinBox" name="posXInput"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_3">
@@ -72,10 +72,10 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+       <widget class="QDoubleSpinBox" name="scaleXInput"/>
       </item>
       <item row="1" column="2">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+       <widget class="QDoubleSpinBox" name="scaleYInput"/>
       </item>
      </layout>
     </item>
