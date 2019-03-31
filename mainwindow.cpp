@@ -81,11 +81,13 @@ void MainWindow::paintEvent(QPaintEvent* event)
 void MainWindow::openScene()
 {
     std::cout << "Open scene" << std::endl;
+    scene->Load();
 }
 
 void MainWindow::saveScene()
 {
     std::cout << "Save scene" << std::endl;
+    scene->Save();
 }
 
 void MainWindow::newScene()

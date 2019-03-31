@@ -1,5 +1,6 @@
 #include "comprecttransform.h"
 #include "gameobject.h"
+#include <iostream>
 
 CompRectTransform::CompRectTransform(GameObject* gameobject, float p_x, float p_y, float s_x, float s_y) :
     Component (gameobject, RECT_TRANSFORM),
@@ -10,18 +11,24 @@ CompRectTransform::CompRectTransform(GameObject* gameobject, float p_x, float p_
 {
 }
 
-void CompRectTransform::Save(QDataStream& in)
+void CompRectTransform::Save(QDataStream& out)
 {
-    in << pos_x;
-    in << pos_y;
-    in << scale_x;
-    in << scale_y;
+    out << pos_x;
+    out << pos_y;
+    out << scale_x;
+    out << scale_y;
 }
 
-void CompRectTransform::Load(QDataStream& out)
+void CompRectTransform::Load(QDataStream& in)
 {
-    out >> pos_x;
-    out >> pos_y;
-    out >> scale_x;
-    out >> scale_y;
+    in >> pos_x;
+    in >> pos_y;
+    in >> scale_x;
+    in >> scale_y;
+
+    std::cout << "Rect("
+              << pos_x << ","
+              << pos_y << ","
+              << scale_x << ","
+              << scale_y << ")";
 }

@@ -1,6 +1,7 @@
 #include "gameobject.h"
 #include "comprecttransform.h"
 #include "compshaperenderer.h"
+#include <iostream>
 
 GameObject::GameObject(QString name) :
     name(name)
@@ -42,9 +43,11 @@ void GameObject::Save(QDataStream& out)
 
 void GameObject::Load(QDataStream& in)
 {
-    in << name;
-    in << id;
-    in << active;
+    in >> name;
+    in >> id;
+    in >> active;
+
+    std::cout << "Loaded: " << (active ? "+" : "-") << "[" << id << "]" << name.toStdString() << "{ ";
 
     int comp_count;
     in >> comp_count;
@@ -55,7 +58,10 @@ void GameObject::Load(QDataStream& in)
         in >> type;
         Component* comp = AddComponent(ComponentTYPE(type));
         comp->Load(in);
+        if (i + 1 < comp_count) std::cout << ", ";
     }
+
+    std::cout << " }" << std::endl;
 }
 
 GameObject::~GameObject()

@@ -107,8 +107,14 @@ void Scene::Load()
                 in >> go_count;
 
 
-                if (go_count)
+                if (go_count > 0)
                 {
+                    foreach (GameObject* go, gameobjects)
+                    {
+                        delete go;
+                        gameobjects.pop_front();
+                    }
+
                     gameobjects.clear();
 
                     for (int i = 0; i < go_count; i++)

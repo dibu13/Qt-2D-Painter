@@ -1,14 +1,7 @@
 #include "compshaperenderer.h"
 #include "gameobject.h"
 #include "comprecttransform.h"
-
-/*
- * Qt::SolidLine = 1
- * Qt::DashLine = 2
- * Qt::DotLine = 3
- * Qt::DashDotLine = 4
- * Qt::DashDotDotLine = 5
-*/
+#include "iostream"
 
 CompShapeRenderer::CompShapeRenderer(GameObject* gameobject) :
     Component (gameobject, SHAPE_RENDERER),
@@ -44,27 +37,35 @@ void CompShapeRenderer::Draw(QPainter& painter, QRect display_section, bool sele
     }
 }
 
-void CompShapeRenderer::Save(QDataStream& in)
+void CompShapeRenderer::Save(QDataStream& out)
 {
-    in << shape;
-    in << size;
-    in << fill_color;
-    in << stroke_color;
-    in << stroke_thickness;
-    in << stroke_style;
+    out << shape;
+    out << size;
+    out << fill_color;
+    out << stroke_color;
+    out << stroke_thickness;
+    out << stroke_style;
 
 }
 
-void CompShapeRenderer::Load(QDataStream& out)
+void CompShapeRenderer::Load(QDataStream& in)
 {
     uint type;
-    out >> type;
+    in >> type;
     shape = SHAPE(type);
 
-    out >> size;
-    out >> fill_color;
-    out >> stroke_color;
-    out >> stroke_thickness;
-    out >> stroke_style;
+    in >> size;
+    in >> fill_color;
+    in >> stroke_color;
+    in >> stroke_thickness;
+    in >> stroke_style;
 
+    std::string strokes[5] = { "SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine" };
+
+    std::cout << "Shape(" << (type == 0 ? "Circle" : "Rect")<< ","
+              << size << ","
+              << fill_color.name().toStdString() << ","
+              << stroke_color.name().toStdString() << ","
+              << stroke_thickness << ","
+              << strokes[stroke_style] << ")";
 }
